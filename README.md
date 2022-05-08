@@ -72,3 +72,19 @@ source install/setup.bash
 rostopic echo -n1 /prediction
 rostopic echo -n1 /inference 
 ```
+
+#### open one more terminal to save images for training
+```
+source install/setup.bash
+roslaunch img_recognition save_rosimage.launch
+```
+
+#### add image to an labelled folder
+```
+source install/setup.bash
+rosservice call /save_image/save_image_action  true
+```
+#### You can stop the collection
+```
+rosservice call /save_image/save_image_action  false
+```
