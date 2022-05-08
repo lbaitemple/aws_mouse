@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os , sys , argparse ,errno , yaml
-import rospy
+import rospy, rospkg
 
 
 class RVDIR(object):
@@ -11,7 +11,9 @@ class RVDIR(object):
         self.parser = argparse.ArgumentParser(description="remove a folder in ~/ROSKY/catkin_ws/src/" + self.package +"/image",epilog="removeyour image")
         self.parser.add_argument("--name", "-rm", type=str,required=True, help="Please type you want to remove the folder name.")
         self.args = self.parser.parse_args()
-        self.path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) # "~/ROSKY/catkin_ws/src/" + self.package
+        # self.path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) # "~/ROSKY/catkin_ws/src/" + self.package
+        self.path = rospkg.RosPack().get_path(self.package)
+        print(self.path)
         self.remove = False
         action_1 = self.read_param_from_file()
         action_2 = self.try_remove(self.args.name)
@@ -43,6 +45,13 @@ class RVDIR(object):
         else:
             print("[{}] is not exist.".format(remove_path))
             sys.exit(00)
+
+    def getFilePath(self , package, folder, file_name=None):
+        rospack = rospkg.RosPack()
+        if file_name == None:
+            return rospack.get_path(package) + "/" + folder
+        else:
+            return rospack.get_path(package) + "/" + folder + "/" + file_name   
 
 
     def read_param_from_file(self):

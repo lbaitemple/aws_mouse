@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os , sys , argparse ,errno , yaml
-import rospy
+import rospy, rospkg
 
 
 class mkdir(object):
@@ -11,7 +11,9 @@ class mkdir(object):
         self.parser = argparse.ArgumentParser(description="Make a folder in ~/ROSKY/catkin_ws/src/" + self.package +"/image",epilog="save your image")
         self.parser.add_argument("--name" , "-n" , type=str,required=True,help="Please type you want the name of folder.")
         self.args = self.parser.parse_args()
-        self.path = os.path.abspath(os.path.join(os.path.dirname(__file__),os.pardir)) # "~/ROSKY/catkin_ws/src/" + self.package
+#        self.path = os.path.abspath(os.path.join(os.path.dirname(__file__),os.pardir)) # "~/ROSKY/catkin_ws/src/" + self.package
+        self.path = rospkg.RosPack().get_path(self.package)
+        print(self.path)
         self.make = False
         action_1 = self.try_make(self.args.name)
         action_2 = self.read_param_from_file()
@@ -28,12 +30,19 @@ class mkdir(object):
                 print("Note! Directory not created because it already exit. ")
             else:
                 raise
+    def getFilePath(self , package, folder, file_name=None):
+        rospack = rospkg.RosPack()
+        if file_name == None:
+            return rospack.get_path(package) + "/" + folder
+        else:
+            return rospack.get_path(package) + "/" + folder + "/" + file_name   
+
 
     def read_param_from_file(self):
         fname = self.path + "/param/image_label.yaml"
         with open(fname, 'r') as in_file:
             try:
-                self.yaml_dict = yaml.load(in_file)
+                self.yaml_dict = yaml.load(in_file, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 print(" YAML syntax error. File: {}".format(fname))
         if self.yaml_dict != None: 
