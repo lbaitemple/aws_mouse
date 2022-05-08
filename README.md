@@ -1,6 +1,6 @@
 # aws_mouse
 ```
-git clone https://github.com/lbaitemple/aws_mouse/ 
+git -b saveimage clone https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
 chmod +x updateos.sh
 ./updateos.sh
