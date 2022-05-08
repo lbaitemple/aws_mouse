@@ -73,7 +73,7 @@ class srv_client_save_image_action(object):
         if _label != self.label:
             self.label = _label
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-            print ""
+
             rospy.logwarn("Now your label is [{}]".format(self.label))
             rospy.loginfo("You always can click [space] to change the label.")
             rospy.sleep(0.5)

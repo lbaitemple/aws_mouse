@@ -7,9 +7,11 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import CompressedImage, Image
 from uuid import uuid1
 from img_recognition.srv import save_action, save_actionResponse, select_label, select_labelResponse, picture_interval, picture_intervalResponse
-from jetcam_ros.utils import bgr8_to_jpeg
+# from jetcam_ros.utils import bgr8_to_jpeg
 
-
+def bgr8_to_jpeg(value, quality=75):
+    return bytes(cv2.imencode('.jpg', value)[1])
+    
 class Save_Image_Node():
     ####
     # param : label, picture_interval
@@ -30,10 +32,12 @@ class Save_Image_Node():
         self.save_action_status = False
 
         # configure subscriber
-        self.sub_msg = rospy.Subscriber("~image/raw", Image, self.convert_image_to_cv2, queue_size=1)
+       # self.sub_msg = rospy.Subscriber("~image/raw", Image, self.convert_image_to_cv2, queue_size=1)
+        self.sub_msg = rospy.Subscriber("/camera/rgb/image_raw", Image, self.convert_image_to_cv2, queue_size=1)
+
         
         # get / setup ros param
-        self.label = self.setup_parameter("~label","default")
+        self.label = self.setup_parameter("~label","blocked")
         self.yaml_dict = self.read_param_from_file(package=self.package, folder="param", file_name="image_label.yaml")
         self.picture_interval = self.setup_parameter("~picture_interval",0.5)
         self.camera_height = rospy.get_param(self.veh_name + "/jetson_camera/height", 224)
@@ -70,16 +74,18 @@ class Save_Image_Node():
     def read_param_from_file(self, package, folder, file_name):
         fname = self.getFilePath(package=package, folder=folder, file_name=file_name)
         folder = os.listdir(rospkg.RosPack().get_path(package) + "/image")
+        rospy.loginfo("[{}]".format(fname))
         with open(fname, 'r') as in_file:
             try:
-                yaml_dict = yaml.load(in_file)
+                yaml_dict = yaml.load(in_file,Loader=yaml.FullLoader)
+                print(yaml_dict.keys(), self.label )
                 for key in list(yaml_dict.keys()):
                     if key not in folder:
                         rospy.logerr("[{}] Please checkout folder [image] and label in [/param/image_label.yaml]. They are different.".format(self.node_name))
                         #rospy.loginfo("save_image.py will shutdown. Please shutdown the launch file after it(jetson_camera.py still runnung).")
                         sys.exit()
                 if self.label not in yaml_dict.keys() :
-                    rospy.logerr("[{}] Your parameter /rosky/save_image/label [{}] is wrong.".format(self.node_name, self.label))
+                    rospy.logerr("[{}] Your parameter save_image/label [{}] is wrong.".format(self.node_name, self.label))
                     rospy.logerr("[{}] You can only type {}".format(self.node_name, sorted(yaml_dict)))
                     sys.exit()                         
                 else:
