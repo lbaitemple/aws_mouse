@@ -6,7 +6,7 @@
     <arg name="pkg_name" default="img_recognition"/>
     <arg name="raw" default="true"/>
     <arg name="picture_interval" default="0.5"/>
-    <arg name="label" default="blocked"/>
+    <arg name="label" default="background"/>
     <arg name="teleop" default="false"/>
 
 
