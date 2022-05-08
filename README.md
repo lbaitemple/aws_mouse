@@ -78,6 +78,7 @@ rostopic echo -n1 /inference
 rosrun img_recognition mkdir.py -n sunflower
 rosrun img_recognition mkdir.py -n daisy
 rosrun img_recognition mkdir.py -n background
+rosrun img_recognition mkdir.py -n rose
 ```
 
 #### open one more terminal to save images for training
