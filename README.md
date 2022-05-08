@@ -73,10 +73,36 @@ rostopic echo -n1 /prediction
 rostopic echo -n1 /inference 
 ```
 
+### create a folder with label (ex. label = sunflower, daisy and background)
+```
+rosrun img_recognition mkdir.py -n sunflower
+rosrun img_recognition mkdir.py -n daisy
+rosrun img_recognition mkdir.py -n background
+```
+
 #### open one more terminal to save images for training
 ```
 source install/setup.bash
 roslaunch img_recognition save_rosimage.launch
+```
+#### make the default label
+```
+rosservice call /save_image/select_label background
+```
+
+#### add image to an labelled folder
+```
+source install/setup.bash
+rosservice call /save_image/save_image_action  true
+```
+#### You can stop the collection
+```
+rosservice call /save_image/save_image_action  false
+```
+
+#### make another target label sunflower
+```
+rosservice call /save_image/select_label sunflower
 ```
 
 #### add image to an labelled folder
