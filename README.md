@@ -74,6 +74,11 @@ rostopic echo -n1 /inference
 ```
 
 ### create a folder with label (ex. label = sunflower, daisy and background)
+make sure you create a background folder first
+```
+rosrun img_recognition mkdir.py -n background
+```
+Then, you can create other folders based on target image labels
 ```
 rosrun img_recognition mkdir.py -n sunflower
 rosrun img_recognition mkdir.py -n daisy
