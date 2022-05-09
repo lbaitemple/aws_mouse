@@ -88,7 +88,14 @@ rosrun img_recognition mkdir.py -n rose
 ```
 rosrun img_recognition rmdir.py --name rose
 ```
-#### make the default label
+
+#### open one more terminal to save images for training
+```
+source install/setup.bash
+roslaunch img_recognition save_rosimage.launch
+```
+
+#### open one more terminal to make the default label
 ```
 rosservice call /save_image/select_label background
 ```
@@ -96,12 +103,6 @@ rosservice call /save_image/select_label background
 ```
 rosservice call /save_image/select_label rose
 ```
-#### open one more terminal to save images for training
-```
-source install/setup.bash
-roslaunch img_recognition save_rosimage.launch
-```
-
 
 #### add image to an labelled folder
 ```
