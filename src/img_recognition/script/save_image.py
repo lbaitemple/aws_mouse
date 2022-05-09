@@ -9,8 +9,8 @@ from uuid import uuid1
 from img_recognition.srv import save_action, save_actionResponse, select_label, select_labelResponse, picture_interval, picture_intervalResponse
 # from jetcam_ros.utils import bgr8_to_jpeg
 
-def bgr8_to_jpeg(value, quality=75):
-    return bytes(cv2.imencode('.jpg', value)[1])
+#def bgr8_to_jpeg(value, quality=75):
+#    return bytes(cv2.imencode('.jpg', value)[1])
     
 class Save_Image_Node():
     ####
@@ -148,8 +148,9 @@ class Save_Image_Node():
 
     def cb_save_image_timer(self,event):
         if self.save_action_status == True:
-            jpeg_img = bgr8_to_jpeg(self.cv2_img)
-            self.save_img(jpeg_img)
+            is_success, jpeg_img = cv2.imencode(".jpg", self.cv2_img) 
+            # bgr8_to_jpeg(self.cv2_img)
+            self.save_img(jpeg_img.tobytes())
 
     def save_img(self,img):
         img_path = os.path.join(self.path, str(uuid1())+ '.jpg')
