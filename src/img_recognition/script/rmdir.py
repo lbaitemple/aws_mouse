@@ -2,6 +2,8 @@
 
 import os , sys , argparse ,errno , yaml
 import rospy, rospkg
+import shutil
+
 
 
 class RVDIR(object):
@@ -36,7 +38,7 @@ class RVDIR(object):
                 msg = "There are {} images in folder [{}]. Do you want to remove?(y/N): ".format(self.yaml_dict[name], name)
                 remove = input(msg)
                 if remove == "y" or remove == "Y":
-                    os.rmdir(remove_path)
+                    shutil.rmtree(remove_path)
                     self.remove = True
                     print("Done! Remove folder: {}".format(remove_path))
                 else:
