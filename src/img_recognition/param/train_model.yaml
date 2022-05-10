@@ -4,7 +4,7 @@ loader:
   num_workers: 0
 
 train:
-  use_cuda: true
+  use_cuda: false
   model: "alexnet"
   save_model_name: "best3"
   epochs: 10
