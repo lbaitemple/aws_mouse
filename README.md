@@ -26,7 +26,7 @@ roslaunch maze_demo explore_world.launch
 ```
 ###### if load an empty world with rose, you can use
 ```
-roslaunch maze_demo explore_world.launch worldfile:=empty_rose.world
+roslaunch maze_demo explore_world.launch worldfile:=empty_flower.world x:=0 y:=0
 ```
 
 
