@@ -77,6 +77,37 @@ class Micromouse_Node(object):
     def getPredication(self):
         return self.label
 
+    def move_forward(self, distance=0.3, DEBUG = False):
+    
+    	rate = rospy.Rate(30)
+    	
+    	self._mved_distance.data = 0.0
+    	self.get_init_position()
+    	
+    	if distance < 0.0:
+    	    mv_forward = False
+    	else:
+    	    mv_forward = True
+    	vel_msg = Twist()
+    	    	      
+    	while not rospy.is_shutdown():
+            if self.laser_sensors is not None:
+            	vel_msg.linear.x =0.1
+            	if (distance<0):               
+            	   vel_msg.linear.x =-0.1
+            	self.pub_msg.publish(vel_msg)
+
+            	if (self._mved_distance.data >abs(distance)):
+            	    break
+            	rate.sleep()
+
+    	vel_msg.linear.x = 0
+    	self.pub_msg.publish(vel_msg)
+    	if (DEBUG):
+    	    print("distance travelled {:.3f}".format(self._mved_distance.data))
+    	    
+    	return self._mved_distance.data
+
     def move_onecell(self, distance=0.3, kp = 111, DEBUG = False):
     
     	rate = rospy.Rate(30)
