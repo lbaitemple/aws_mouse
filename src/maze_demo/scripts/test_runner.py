@@ -70,6 +70,8 @@ class MazeRunner(object):
             mn.log_info()
             if (self.action == 'forward'):
                 mn.move_onecell(distance=self.argument, DEBUG=True)
+            if (self.action == 'oforward'):
+                mn.move_forward(distance=self.argument, DEBUG=True)
             if (self.action == 'turn'):
                 mn.turnangle(self.argument, DEBUG=True)
             print("done action")
