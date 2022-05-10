@@ -139,8 +139,9 @@ class Train_Model_Node(object):
         for epoch in range(self.NUM_EPOCHS):
             epoch_start = rospy.get_time()
             for images, labels in iter(self.train_loader):
-                images = images.to(self.device)
-                labels = labels.to(self.device)
+                if (self.use_cuda):
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
                 optimizer.zero_grad()
                 outputs = self.model(images)
                 loss = function.cross_entropy(outputs, labels)
@@ -149,8 +150,9 @@ class Train_Model_Node(object):
                 
             test_error_count = 0.0
             for images, labels in iter(self.test_loader):
-                images = images.to(self.device)
-                labels = labels.to(self.device)
+                if (self.use_cuda):
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
                 outputs = self.model(images)
                 test_error_count += float(torch.sum(torch.abs(labels - outputs.argmax(1))))
 
