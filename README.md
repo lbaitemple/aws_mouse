@@ -33,7 +33,7 @@ rqt_image_view
 ```
 
 
-###### if load an empty world with rose, you can use
+###### if load an empty world with flowers, you can use
 ```
 roslaunch maze_demo explore_world.launch worldfile:=empty_flower.world x:=0 y:=0
 ```
