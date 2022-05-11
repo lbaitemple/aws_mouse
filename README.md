@@ -146,10 +146,6 @@ rostopic echo -n1 /inference
 ```
 
 
-### Restore configuration
-```
-bash ./saveconfig.sh restore
-```
 
 ##### if you want to show laser scan (help to see if the robot hits the wall)
 ```
