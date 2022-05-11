@@ -149,7 +149,7 @@ class Inference_Model_Node(object):
         fname = self.getFilePath(name=file_name,folder=file_folder)
         with open(fname, 'r') as in_file:
             try:
-                yaml_dict = yaml.load(in_file)
+                yaml_dict = yaml.load(in_file, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 print(" YAML syntax  error. File: {}".format(fname))
         return yaml_dict
