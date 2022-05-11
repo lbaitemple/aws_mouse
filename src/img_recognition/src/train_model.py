@@ -241,6 +241,7 @@ class Train_Model_Node(object):
                     "epochs": self.train_epochs,
                     "learning_rate": self.train_lr,
                     "momentum": self.train_momentum,
+                    "gpu_model": self.use_cuda,
                     "train_time": train_time,
                     "accuracy"  : accuracy,
                 },
