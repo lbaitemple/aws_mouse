@@ -130,7 +130,12 @@ rosservice call /save_image/save_image_action  true
 ```
 rosservice call /save_image/save_image_action  false
 ```
-### Save configuration
+### Backup configuration
 ```
 bash ./saveconfig.sh backup
+```
+
+### Restore configuration
+```
+bash ./saveconfig.sh restore
 ```
