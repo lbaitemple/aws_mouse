@@ -2,14 +2,13 @@
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
-chmod +x updateos.sh
-./updateos.sh
+bash ./updateos.sh
 ```
 If you see any lock error, please try
 ```
 sudo rm -r /var/lib/dpkg/lock*
 sudo dpkg --configure -a
-./updateos.sh
+bash ./updateos.sh
 ```
 
 ### compile ROS
