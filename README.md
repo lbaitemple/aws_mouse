@@ -117,6 +117,17 @@ rosservice call /save_image/save_image_action  false
 bash ./saveconfig.sh backup
 ```
 
+### Restore configuration
+```
+bash ./saveconfig.sh restore
+```
+
+### get a deep learning trained model
+```
+source install/setup.bash
+roslaunch img_recognition train_rosmodel.launch
+
+```
 
 ### running deep learning inferencing
 #### open another terminal 
