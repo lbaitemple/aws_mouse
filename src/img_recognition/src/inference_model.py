@@ -175,6 +175,7 @@ class Inference_Model_Node(object):
             img = img.transpose((2, 0, 1))
             img = torch.from_numpy(img).float()
             img = self.process_img_normalize(img)
+        if (self.use_cuda):
             img = img.to(self.device)
             
         img = img[None, ...]
