@@ -79,9 +79,9 @@ rosrun img_recognition mkdir.py -n background
 ```
 Then, you can create other folders based on target image labels
 ```
+rosrun img_recognition mkdir.py -n rose
 rosrun img_recognition mkdir.py -n sunflower
 rosrun img_recognition mkdir.py -n daisy
-rosrun img_recognition mkdir.py -n rose
 ```
 ### remove a folder
 ```
@@ -117,7 +117,10 @@ rosservice call /save_image/save_image_action  false
 ```
 rosservice call /save_image/select_label sunflower
 ```
-
+#### make another target label rose
+```
+rosservice call /save_image/select_label rose
+```
 #### add image to an labelled folder
 ```
 source install/setup.bash
@@ -126,4 +129,8 @@ rosservice call /save_image/save_image_action  true
 #### You can stop the collection
 ```
 rosservice call /save_image/save_image_action  false
+```
+### Save configuration
+```
+bash ./saveconfig.sh backup
 ```
