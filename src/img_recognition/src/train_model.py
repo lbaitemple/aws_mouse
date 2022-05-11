@@ -177,7 +177,7 @@ class Train_Model_Node(object):
         folder = os.listdir(rospkg.RosPack().get_path(self.package)+"/image")
         with open(fname, 'r') as in_file:
             try:
-                self.yaml_dict = yaml.load(in_file)
+                self.yaml_dict = yaml.load(in_file, Loader=yaml.FullLoader)
                 for key in list(self.yaml_dict.keys()) :
                     if key not in folder :
                         rospy.loginfo("Please checkout folder [image] and label in [/param/image_label.yaml]. They are different.")
