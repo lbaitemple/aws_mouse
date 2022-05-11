@@ -60,7 +60,7 @@ class RVDIR(object):
         fname = self.path + "/param/image_label.yaml"
         with open(fname, 'r') as in_file:
             try:
-                self.yaml_dict = yaml.load(in_file)
+                self.yaml_dict = yaml.load(in_file, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 print(" YAML syntax error. File: {}".format(fname))
         if self.yaml_dict != None: 
