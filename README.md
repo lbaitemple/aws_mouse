@@ -1,4 +1,4 @@
-# aws_mouse
+# aws_mouse (only run once)
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
@@ -11,15 +11,15 @@ sudo dpkg --configure -a
 bash ./updateos.sh
 ```
 
-### compile ROS
+### compile ROS (only run once)
 ```
 rosdep install --from-paths src --ignore-src -r -y
-colcon build
-source install/setup.bash
 ```
 
-### open virtual desktop
+### open virtual desktop 
 ```
+colcon build
+source install/setup.bash
 export DISPLAY=:0
 roslaunch maze_demo explore_world.launch
 ```
