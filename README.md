@@ -1,4 +1,5 @@
 ## Install Robomaker 
+contribution from Mr. Nigel Gardiner from AWS
 ```
 curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 ```
