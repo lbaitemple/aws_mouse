@@ -1,3 +1,8 @@
+## Install Robomaker 
+```
+curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
+```
+
 # aws_mouse (only run once)
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
