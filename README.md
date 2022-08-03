@@ -20,6 +20,8 @@ bash ./updateos.sh
 ### compile ROS (only run once)
 ```
 rosdep install --from-paths src --ignore-src -r -y
+pip2 install -U PyYAML
+
 ```
 
 ### open virtual desktop 
