@@ -15,7 +15,8 @@ fi
 var="$(lsb_release -sr)"
 if [ $var = "18.04" ]; then
     # pip install torch torchvision  future
-    pip2 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+    pip2 install torch==1.4.0 torchvision==0.5.0 torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+    pip2 install future
     sudo apt-get install python-numpy
     python -m pip install --upgrade Pillow
     pip2 install -U PyYAML
