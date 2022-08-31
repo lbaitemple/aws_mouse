@@ -18,7 +18,7 @@ if [ $var = "18.04" ]; then
     pip2 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
     sudo apt-get install python-numpy
     python -m pip install --upgrade Pillow
-    pip install -U PyYAML
+    pip2 install -U PyYAML
 
 fi
 
