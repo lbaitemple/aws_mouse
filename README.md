@@ -15,11 +15,13 @@ wget https://raw.githubusercontent.com/lbaitemple/aws_mouse/saveimage/ubuntu-200
 ```
 
 create a file .aws/credentials  with the following content 
+```
 [default]
 region=us-east-1
 aws_access_key_id= 
 aws_secret_access_key=
 aws_session_token=
+```
 
 # aws_mouse (only run once)
 ```
