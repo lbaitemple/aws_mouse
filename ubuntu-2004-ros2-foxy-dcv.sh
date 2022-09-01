@@ -107,9 +107,9 @@ tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && cd nice-dcv-2022.1-1330
 
 #&& echo "7569c95465743b512f1ab191e58ea09777353b401c1ec130ee8ea344e00f8900 nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz" | sha256sum -c && tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && rm nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz
 # install_dcv
-sudo apt install ./nice-dcv-server_2022.1.13300-1_amd64.ubuntu2004.deb
-sudo apt install ./nice-xdcv_2022.1.433-1_amd64.ubuntu2004.deb
-sudo apt install ./nice-dcv-web-viewer_2022.1.13300-1_amd64.ubuntu2004.deb
+sudo apt install ./nice-dcv-server_2022.1.13300-1_amd64.ubuntu2004.deb -y
+sudo apt install ./nice-xdcv_2022.1.433-1_amd64.ubuntu2004.deb -y  
+sudo apt install ./nice-dcv-web-viewer_2022.1.13300-1_amd64.ubuntu2004.deb -y
 #cd nice-dcv-2022.1-13300-ubuntu2004-x86_64 && DEBIAN_FRONTEND=noninteractive apt-get install -y ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb
 cd /home/ubuntu
 
