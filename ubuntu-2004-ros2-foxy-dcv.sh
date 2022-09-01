@@ -101,10 +101,10 @@ sudo su -l ubuntu -c "dbus-launch gsettings set org.gnome.desktop.lockdown disab
 sudo su -l ubuntu -c "dbus-launch gsettings set org.gnome.desktop.session idle-delay 0"
 
 # get_dcv_pkg
-wget https://d1uj6qtbmh3dt5.cloudfront.net/2020.1/Servers/nice-dcv-2020.1-9012-ubuntu1804-x86_64.tgz && echo "7569c95465743b512f1ab191e58ea09777353b401c1ec130ee8ea344e00f8900 nice-dcv-2020.1-9012-ubuntu1804-x86_64.tgz" | sha256sum -c && tar -xvzf nice-dcv-2020.1-9012-ubuntu1804-x86_64.tgz && rm nice-dcv-2020.1-9012-ubuntu1804-x86_64.tgz
+wget https://d1uj6qtbmh3dt5.cloudfront.net/2020.1/Servers/nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && echo "7569c95465743b512f1ab191e58ea09777353b401c1ec130ee8ea344e00f8900 nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz" | sha256sum -c && tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && rm nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz
 
 # install_dcv
-cd nice-dcv-2020.1-9012-ubuntu1804-x86_64 && DEBIAN_FRONTEND=noninteractive apt-get install -y ./nice-dcv-server_2020.1.9012-1_amd64.ubuntu1804.deb ./nice-xdcv_2020.1.338-1_amd64.ubuntu1804.deb
+cd nice-dcv-2022.1-13300-ubuntu2004-x86_64 && DEBIAN_FRONTEND=noninteractive apt-get install -y ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb
 cd /home/ubuntu
 
 # create_dcv_conf
