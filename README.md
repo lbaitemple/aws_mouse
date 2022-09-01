@@ -4,6 +4,13 @@ contribution from Mr. Nigel Gardiner from AWS
 curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 ```
 
+#### 
+#### create 20.04
+```
+sudo apt install python2 nodejs
+```
+run the above code in ec2 before cloud9 is launched.
+
 # aws_mouse (only run once)
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
