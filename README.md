@@ -10,6 +10,9 @@ curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 sudo apt install python2 nodejs awscli -y
 ```
 run the above code in ec2 before cloud9 is launched.
+```
+wget https://raw.githubusercontent.com/lbaitemple/aws_mouse/saveimage/ubuntu-2004-ros2-foxy-dcv.sh
+```
 
 # aws_mouse (only run once)
 ```
