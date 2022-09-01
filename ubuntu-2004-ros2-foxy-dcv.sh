@@ -1,6 +1,7 @@
 #!/bin/bash -v
 
 # log_to_/var/log/user-data.log
+sudo apt install awscli -y
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 sleep 10
 apt-get update && apt-get upgrade -y linux-aws && apt upgrade -y
@@ -101,10 +102,15 @@ sudo su -l ubuntu -c "dbus-launch gsettings set org.gnome.desktop.lockdown disab
 sudo su -l ubuntu -c "dbus-launch gsettings set org.gnome.desktop.session idle-delay 0"
 
 # get_dcv_pkg
-wget https://d1uj6qtbmh3dt5.cloudfront.net/2020.1/Servers/nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && echo "7569c95465743b512f1ab191e58ea09777353b401c1ec130ee8ea344e00f8900 nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz" | sha256sum -c && tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && rm nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz
+wget https://d1uj6qtbmh3dt5.cloudfront.net/2022.1/Servers/nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz
+tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && cd nice-dcv-2022.1-13300-ubuntu2004-x86_64
 
+#&& echo "7569c95465743b512f1ab191e58ea09777353b401c1ec130ee8ea344e00f8900 nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz" | sha256sum -c && tar -xvzf nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz && rm nice-dcv-2022.1-13300-ubuntu2004-x86_64.tgz
 # install_dcv
-cd nice-dcv-2022.1-13300-ubuntu2004-x86_64 && DEBIAN_FRONTEND=noninteractive apt-get install -y ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb
+sudo apt install ./nice-dcv-server_2022.1.13300-1_amd64.ubuntu2004.deb
+sudo apt install ./nice-xdcv_2022.1.433-1_amd64.ubuntu2004.deb
+sudo apt install ./nice-dcv-web-viewer_2022.1.13300-1_amd64.ubuntu2004.deb
+#cd nice-dcv-2022.1-13300-ubuntu2004-x86_64 && DEBIAN_FRONTEND=noninteractive apt-get install -y ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb ./nice-dcv-2022.1-13300-1_amd64.ubuntu2004.deb
 cd /home/ubuntu
 
 # create_dcv_conf
