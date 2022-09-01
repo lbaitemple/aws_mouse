@@ -14,6 +14,13 @@ run the above code in ec2 before cloud9 is launched.
 wget https://raw.githubusercontent.com/lbaitemple/aws_mouse/saveimage/ubuntu-2004-ros2-foxy-dcv.sh
 ```
 
+create a file .aws/credentials  with the following content 
+[default]
+region=us-east-1
+aws_access_key_id= 
+aws_secret_access_key=
+aws_session_token=
+
 # aws_mouse (only run once)
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
