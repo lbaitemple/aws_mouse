@@ -7,7 +7,7 @@ curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 #### 
 #### create 20.04
 ```
-sudo apt install python2 nodejs -y
+sudo apt install python2 nodejs awscli -y
 ```
 run the above code in ec2 before cloud9 is launched.
 
