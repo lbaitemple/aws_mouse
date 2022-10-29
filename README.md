@@ -72,6 +72,7 @@ roslaunch maze_demo explore_world.launch worldfile:=empty_flower.world x:=0 y:=0
 #####  open another terminal 
 
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 rosrun maze_demo test_runner.py forward 0.1
 rosrun maze_demo test_runner.py turn 90
@@ -99,6 +100,7 @@ rosrun img_recognition rmdir.py --name rose
 
 #### open one more terminal to save images for training
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 roslaunch img_recognition save_rosimage.launch
 ```
@@ -114,6 +116,7 @@ rosservice call /save_image/select_label rose
 
 #### add image to an labelled folder
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 rosservice call /save_image/save_image_action  true
 ```
@@ -132,6 +135,7 @@ rosservice call /save_image/select_label rose
 ```
 #### add image to an labelled folder
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 rosservice call /save_image/save_image_action  true
 ```
@@ -151,6 +155,8 @@ bash ./saveconfig.sh restore
 
 ### get a deep learning trained model
 ```
+cd 
+cd ~/environment/aws_mouse
 source install/setup.bash
 roslaunch img_recognition train_rosmodel.launch
 
@@ -160,6 +166,7 @@ roslaunch img_recognition train_rosmodel.launch
 #### open another terminal 
 ##### to run the classifier using deep learning neural network
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 roslaunch img_recognition infer.launch 
 ```
@@ -167,6 +174,7 @@ roslaunch img_recognition infer.launch
 #### open another terminal 
 ##### to run the following command to get prediction/inference
 ```
+cd ~/environment/aws_mouse
 source install/setup.bash
 rostopic echo -n1 /prediction
 rostopic echo -n1 /inference 
