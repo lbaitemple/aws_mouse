@@ -73,7 +73,7 @@ roslaunch maze_demo explore_world.launch worldfile:=empty_flower.world x:=0 y:=0
 
 ```
 source install/setup.bash
-rosrun maze_demo test_runner.py oforward 0.1
+rosrun maze_demo test_runner.py forward 0.1
 rosrun maze_demo test_runner.py turn 90
 ```
 ### or choose a different position or pose
