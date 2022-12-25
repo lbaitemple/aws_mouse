@@ -310,7 +310,7 @@
           <pose>0 0 0.0025 0 -0 0</pose>
           <geometry>
             <box>
-              <size>2.892 2.892 0.005</size>
+              <size>5.1 5.1 0.005</size>
             </box>
           </geometry>
           <surface>
