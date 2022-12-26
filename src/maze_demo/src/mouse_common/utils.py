@@ -74,7 +74,7 @@ class Micromouse_Node(object):
         self.pub_msg = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.laser_sensors = {'left': 0, 'frontleft': 0, 'front': 0, 'frontright': 0, 'right': 0}
 	
-	self.laser_pub = rospy.Publisher('/laser', Vector3, queue_size = 1)
+	# self.laser_pub = rospy.Publisher('/laser', Vector3, queue_size = 1)
 
 	 # configure Publisher for distance
         self.distance_msg=rospy.Publisher('/distance', String, queue_size=1)
