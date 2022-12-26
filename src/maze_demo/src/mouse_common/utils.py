@@ -202,7 +202,7 @@ class Micromouse_Node(object):
         msg = Twist()
         integ = 0
         diff = 0
-        output = -sign*kp*error # - ki*integ - kd*diff
+        output = self.clamp(-sign*kp*error, -1, 1) # - ki*integ - kd*diff and limited it between -1, 1
         msg.linear.x = AC
         #print("turning angle {:.3f}".format(output))
 
@@ -213,7 +213,9 @@ class Micromouse_Node(object):
 
         return msg
         
-        
+    def clamp(self, n, minn, maxn):
+        return max(min(maxn, n), minn)
+
     def follow_both_wall(self, mv_forward, desired_dist = 0.14, kp = 111):
         #kp =  111
         ki = 0
