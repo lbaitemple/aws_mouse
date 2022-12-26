@@ -15,6 +15,9 @@ from std_msgs.msg import Float32,String
 from std_msgs.msg import Float64
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from img_recognition.msg import Prediction
+from rospy_message_converter import message_converter, json_message_converter
+
+
 
 foundHeading = False
 current_heading =0
@@ -71,6 +74,10 @@ class Micromouse_Node(object):
         self.pub_msg = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.laser_sensors = {'left': 0, 'frontleft': 0, 'front': 0, 'frontright': 0, 'right': 0}
 
+	 # configure Publisher for distance
+        self.distance_msg=rospy.Publisher('/distance', String, queue_size=1)
+        
+
         while (not self.laser_ready):
             time.sleep(1)
 
@@ -92,6 +99,7 @@ class Micromouse_Node(object):
     	    	      
     	while not rospy.is_shutdown():
             if self.laser_sensors is not None:
+
             	vel_msg.linear.x =0.1
             	if (distance<0):               
             	   vel_msg.linear.x =-0.1
@@ -196,7 +204,7 @@ class Micromouse_Node(object):
         msg.linear.x = AC
         #print("turning angle {:.3f}".format(output))
 
-#        print("output->:{:.3f} and left distance->: {:.3f}, current right distance->: {:.3f}".format(output, self.laser_sensors['l'], self.laser_sensors['r']))
+#        print("output->:{:.3f} and left distance->: {:.3f}, current right distance->: {:.3f}".format(output,  self.laser_sensors['left'], self.laser_sensors['right']))
 
         msg.angular.z =  output
 
@@ -341,13 +349,18 @@ class Micromouse_Node(object):
             ):int(initial_angle + i * laser_interval + half_laser_interval) + 1]
             interval[i] = min(np.mean(np.nan_to_num(dirty_values)), 8.0)
 
-        laser_sensors['right'] = interval[0]
-        laser_sensors['frontright'] = interval[1]
-        laser_sensors['front'] = interval[2]
-        laser_sensors['frontleft'] = interval[3]
-        laser_sensors['left'] = interval[4]
+        laser_sensors['right'] = round(interval[0], 2)
+        laser_sensors['frontright'] = round(interval[1], 2)
+        laser_sensors['front'] = round(interval[2], 2)
+        laser_sensors['frontleft'] = round(interval[3], 2)
+        laser_sensors['left'] = round(interval[4], 2)
         self.laser_ready=True
-
+        #print("------------------------------")
+        #print(str(laser_sensors))
+        #print("------------------------------")
+        dis_msg = str(laser_sensors) #  .replace("'",'"')   # need to load key as a string with ""
+        #dis_msg = json_message_converter.convert_json_to_ros_message('std_msgs/Float64', alaser_sensors)
+        self.distance_msg.publish(dis_msg)
         self.laser_sensors = laser_sensors
 
 
