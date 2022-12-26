@@ -132,7 +132,7 @@ class Micromouse_Node(object):
     	      
     	while not rospy.is_shutdown():
             if self.laser_sensors is not None:
-            	vel_msg = self.follow_right_wall(mv_forward, desired_dist = 0.14, kp = 111)
+            	vel_msg = self.follow_right_wall(mv_forward, desired_dist = 0.14, kp = kp)
             	#vel_msg = self.follow_both_wall(mv_forward, desired_dist = 0.14, kp=kp)
             	self.pub_msg.publish(vel_msg)
             	if (self.laser_sensors['front']<wall_distance_forward):
