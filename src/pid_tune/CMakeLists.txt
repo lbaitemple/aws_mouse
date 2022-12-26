@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 2.8...3.13)
 project(pid_tune)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
