@@ -212,6 +212,62 @@ class Micromouse_Node(object):
 
 
         return msg
+
+
+    def follow_left_wall(self, mv_forward, desired_dist = 0.14, kp = 111):
+        #kp =  111
+        ki = 0
+        kd = 0
+
+        theta = 45;
+        sign = 1
+        
+        if mv_forward is True:
+            AC = 0.2
+        else:
+            AC = -0.2
+            kp=kp/10
+            sign=-1
+        
+        #desired_trajectory =0.14
+        
+        
+        a = self.laser_sensors['frontleft']
+        #if self.laser_sensors['r'] > 0.3 and self.laser_sensors['fr'] < 0.3:
+        #    print(" no wall left")
+        #    b = a
+        #else:
+        #    b = self.laser_sensors['r']
+        b = self.laser_sensors['left']
+        swing = math.radians(theta)
+        ABangle = -sign*math.atan2( a * math.cos(swing) - b , a * math.sin(swing))
+        AB = b * math.cos(ABangle)
+
+	#https://github.com/mlab-upenn/f1tenthpublic/blob/master/f1_tenth_sim/race/scripts/levineDemo.py
+	#alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
+	#print "Alpha left",math.degrees(alpha)
+	#curr_dist = b*math.cos(alpha)
+	#future_dist = curr_dist-car_length*math.sin(alpha)
+
+
+        # AC = 0.2     # how much the car moves in one time shot or linear.x in twist message
+        CD = AB - AC * math.sin(ABangle)
+        error =  desired_dist -CD
+
+        msg = Twist()
+        integ = 0
+        diff = 0
+        output = self.clamp(-sign*kp*error, -1, 1) # - ki*integ - kd*diff and limited it between -1, 1
+        msg.linear.x = AC
+        #print("turning angle {:.3f}".format(output))
+
+#        print("output->:{:.3f} and left distance->: {:.3f}, current right distance->: {:.3f}".format(output,  self.laser_sensors['left'], self.laser_sensors['right']))
+
+        msg.angular.z =  output
+
+
+        return msg
+
         
     def clamp(self, n, minn, maxn):
         return max(min(maxn, n), minn)
