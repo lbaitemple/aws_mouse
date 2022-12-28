@@ -132,9 +132,23 @@ class Micromouse_Node(object):
     	      
     	while not rospy.is_shutdown():
             if self.laser_sensors is not None:
-            	vel_msg = self.follow_right_wall(mv_forward, desired_dist = 0.14, kp = kp)
-            	#vel_msg = self.follow_both_wall(mv_forward, desired_dist = 0.14, kp=kp)
-            	self.pub_msg.publish(vel_msg)
+            	vel_msgl, leftd = self.follow_left_wall(mv_forward, desired_dist = 0.13, kp = kp)
+            	vel_msgr, rightd = self.follow_right_wall(mv_forward, desired_dist = 0.13, kp = kp)
+		# no wall on both side
+                if ((self.laser_sensors['left']>0.3 and self.laser_sensors['right']>0.3) or (self.laser_sensors['frontleft']>0.3 and self.laser_sensors['frontright']>0.3)): # no wall on both side
+                    vel_msg = vel_msgl
+                    vel_msg.angular.z =0 # no rotation
+#                    print("no wall")
+                else:
+		    # if left side wall is closer, follow left
+	            if rightd >= leftd:  # follow left
+#                        print("follow left -{:.3f}, {:.3}, {:.3f}, {:.3}, {:.3}".format(self.laser_sensors['left'], self.laser_sensors['right'], self.laser_sensors['frontleft'], self.laser_sensors['frontright'], leftd))
+                        vel_msg = vel_msgl
+                    else:
+                        vel_msg = vel_msgr
+#                        print("follow right-{:.3f}, {:.3f}, {:.3}".format(self.laser_sensors['left'], self.laser_sensors['right'], rightd))
+
+		self.pub_msg.publish(vel_msg)
             	if (self.laser_sensors['front']<wall_distance_forward):
             	    break
             	if (self._mved_distance.data >abs(distance)):
