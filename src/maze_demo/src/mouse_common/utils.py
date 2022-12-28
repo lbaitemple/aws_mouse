@@ -225,7 +225,7 @@ class Micromouse_Node(object):
         msg.angular.z =  output
 
 
-        return msg
+        return msg, AB
 
 
     def follow_left_wall(self, mv_forward, desired_dist = 0.14, kp = 111):
@@ -280,7 +280,7 @@ class Micromouse_Node(object):
         msg.angular.z =  output
 
 
-        return msg
+        return msg, AB
 
         
     def clamp(self, n, minn, maxn):
