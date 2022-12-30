@@ -118,6 +118,10 @@ class Micromouse_Node(object):
     	    
     	return self._mved_distance.data
 
+    def print_walldistance(self, DEBUG = False, follow='no wall'):
+    	if (DEBUG):
+    	    print("lft-{:.3f},rgt-{:.3f}, frt-{:.3f}, {}".format(self.laser_sensors['left'], self.laser_sensors['right'],self.laser_sensors['front'], follow))
+
     def move_onecell(self, distance=0.3, kp = 111, DEBUG = False):
     
     	rate = rospy.Rate(30)
@@ -134,21 +138,34 @@ class Micromouse_Node(object):
             if self.laser_sensors is not None:
             	vel_msgl, leftd = self.follow_left_wall(mv_forward, desired_dist = 0.13, kp = kp)
             	vel_msgr, rightd = self.follow_right_wall(mv_forward, desired_dist = 0.13, kp = kp)
+            	vel_msgc, centerd = self.follow_both_wall(mv_forward, desired_dist = 0.13, kp = kp)
+            	
 		# no wall on both side
+                follow=''
                 if ((self.laser_sensors['left']>0.3 and self.laser_sensors['right']>0.3) or (self.laser_sensors['frontleft']>0.3 and self.laser_sensors['frontright']>0.3)): # no wall on both side
                     vel_msg = vel_msgl
                     vel_msg.angular.z =0 # no rotation
+                    follow = 'no wall'
 #                    print("no wall")
                 else:
 		    # if left side wall is closer, follow left
-	            if rightd >= leftd:  # follow left
-#                        print("follow left -{:.3f}, {:.3}, {:.3f}, {:.3}, {:.3}".format(self.laser_sensors['left'], self.laser_sensors['right'], self.laser_sensors['frontleft'], self.laser_sensors['frontright'], leftd))
+	            if (rightd > leftd) and (self.laser_sensors['frontleft']>0.07):  # follow left
                         vel_msg = vel_msgl
-                    else:
+                        follow = 'left wall'
+	            elif (rightd > leftd) and (self.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
+                        vel_msg = vel_msgc
+                        follow = 'center wall'
+	            elif (rightd < leftd) and (self.laser_sensors['frontright']>0.07):  # follow right
                         vel_msg = vel_msgr
-#                        print("follow right-{:.3f}, {:.3f}, {:.3}".format(self.laser_sensors['left'], self.laser_sensors['right'], rightd))
+                        follow = 'right wall'
+                    else:
+                        vel_msg = vel_msgc
+                        follow = 'center wall'
+
+ 
 
 		self.pub_msg.publish(vel_msg)
+                self.print_walldistance(True, follow)
             	if (self.laser_sensors['front']<wall_distance_forward):
             	    break
             	if (self._mved_distance.data >abs(distance)):
@@ -301,29 +318,23 @@ class Micromouse_Node(object):
         #desired_trajectory =0.14
         
         
-        a = self.laser_sensors['frontright']
-        b = self.laser_sensors['right']
-        c = self.laser_sensors['left']
-        d = self.laser_sensors['frontleft']
-        #if self.laser_sensors['r'] > 0.3 and self.laser_sensors['fr'] < 0.3:
-        #    print(" no wall left")
-        #    b = a
-        #else:
-        #    b = self.laser_sensors['r']
+        c = self.laser_sensors['frontright']
+        d = self.laser_sensors['right']
+        a = self.laser_sensors['frontleft']
+        b = self.laser_sensors['left']
+
         swing = math.radians(theta)
-        ABangle = math.atan2( a * math.cos(swing) - b , a * math.sin(swing))
-        AB = b * math.cos(ABangle)
+        alpha = -math.atan((a*math.cos(swing)-b)/(a*math.sin(swing)))
+        curr_dist1 = b*math.cos(alpha)
+        future_dist1 = curr_dist1-AC*math.sin(alpha)
+
+        alpha = math.atan((c*math.cos(swing)-d)/(c*math.sin(swing))) 
+        curr_dist2 = d*math.cos(alpha) 
         # AC = 0.2     # how much the car moves in one time shot or linear.x in twist message
-        CDr = b * math.cos(ABangle) + AC * math.sin(ABangle)
-        CDl = c*math.cos(ABangle) - AC*math.sin(ABangle)
-        if b < 0.3 and c < 0.3: 
-            error = CDr - CDl
-        elif c < 0.3:
-            error = desired_dist - CDl
-        elif b < 0.3:
-            error = CDr - desired_dist
-        else:
-            error = 0
+        future_dist2 = curr_dist2+AC*math.sin(alpha)
+
+        desired_trajectory = (future_dist1 + future_dist2)/2
+	error = future_dist1 - future_dist2
         
 
         msg = Twist()
@@ -334,13 +345,13 @@ class Micromouse_Node(object):
         #else:
         #    output = kp*(c-a)
 
-        output = -kp*error # - ki*integ - kd*diff
+        output =self.clamp(-kp*error, -1, 1)  # - ki*integ - kd*diff
         msg.linear.x = AC
 #        print("output->:{:.3f} and left distance->: {:.3f}, current right distance->: {:.3f}".format(output, self.laser_sensors['l'], self.laser_sensors['r']))
         msg.angular.z =  output
  #       print("turning angle {:.3f}".format(output))
 
-        return msg
+        return msg, (curr_dist2-curr_dist1)
 
     '''
     NO NEED to revise the code
