@@ -54,7 +54,7 @@ class agent:
     Or they can be the physical agents (like robots)
     They can have two shapes (square or arrow)
     '''
-    def __init__(self,parentMaze,x=None,y=None,shape='square',goal=None,filled=False,footprints=False,color:COLOR=COLOR.blue):
+    def __init__(self,parentMaze,x=None,y=None,shape='square',goal=None,filled=False,footprints=False,color=COLOR.blue):
         '''
         parentmaze-->  The maze on which agent is placed.
         x,y-->  Position of the agent i.e. cell inside which agent will be placed
@@ -83,7 +83,7 @@ class agent:
             if(color in COLOR.__members__):
                 self.color=COLOR[color]
             else:
-                raise ValueError(f'{color} is not a valid COLOR!')
+                raise ValueError("{} is not a valid COLOR!".format(color))
         self.filled=filled
         self.shape=shape
         self._orient=0
