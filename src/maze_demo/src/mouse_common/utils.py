@@ -141,31 +141,31 @@ class Micromouse_Node(object):
             	vel_msgc, centerd = self.follow_both_wall(mv_forward, desired_dist = 0.13, kp = kp)
             	
 		# no wall on both side
-                follow=''
-                if ((self.laser_sensors['left']>0.3 and self.laser_sensors['right']>0.3) or (self.laser_sensors['frontleft']>0.3 and self.laser_sensors['frontright']>0.3)): # no wall on both side
+            	follow=''
+            	if ((self.laser_sensors['left']>0.3 and self.laser_sensors['right']>0.3) or (self.laser_sensors['frontleft']>0.3 and self.laser_sensors['frontright']>0.3)): # no wall on both side
                     vel_msg = vel_msgl
                     vel_msg.angular.z =0 # no rotation
                     follow = 'no wall'
 #                    print("no wall")
-                else:
+            	else:
 		    # if left side wall is closer, follow left
-	            if (rightd > leftd) and (self.laser_sensors['frontleft']>0.07):  # follow left
+            	    if (rightd > leftd) and (self.laser_sensors['frontleft']>0.07):  # follow left
                         vel_msg = vel_msgl
                         follow = 'left wall'
-	            elif (rightd > leftd) and (self.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
+            	    elif (rightd > leftd) and (self.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
                         vel_msg = vel_msgc
                         follow = 'center wall'
-	            elif (rightd < leftd) and (self.laser_sensors['frontright']>0.07):  # follow right
+            	    elif (rightd < leftd) and (self.laser_sensors['frontright']>0.07):  # follow right
                         vel_msg = vel_msgr
                         follow = 'right wall'
-                    else:
+            	    else:
                         vel_msg = vel_msgc
                         follow = 'center wall'
 
  
 
-		self.pub_msg.publish(vel_msg)
-                self.print_walldistance(True, follow)
+            	self.pub_msg.publish(vel_msg)
+            	self.print_walldistance(True, follow)
             	if (self.laser_sensors['front']<wall_distance_forward):
             	    break
             	if (self._mved_distance.data >abs(distance)):
@@ -334,7 +334,7 @@ class Micromouse_Node(object):
         future_dist2 = curr_dist2+AC*math.sin(alpha)
 
         desired_trajectory = (future_dist1 + future_dist2)/2
-	error = future_dist1 - future_dist2
+        error = future_dist1 - future_dist2
         
 
         msg = Twist()
