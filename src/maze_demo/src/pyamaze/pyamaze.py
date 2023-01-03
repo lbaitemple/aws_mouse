@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import random,datetime,csv,os
-from tkinter import *
+from Tkinter import *
 from enum import Enum
 from collections import deque
 from sys import platform
