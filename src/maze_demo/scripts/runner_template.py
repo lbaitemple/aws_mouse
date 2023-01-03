@@ -125,7 +125,6 @@ class MazeRunner(object):
             if (self.action == 'forward'):
                 mn.move_onecell(distance=self.argument, kp=80, DEBUG=True)
             if (self.action == 'oforward'):
-                print("rrrt")
                 self.moveOneCell(mn, distance=self.argument, kp=80, DEBUG=True)
             if (self.action == 'turn'):
                 mn.turnangle(self.argument, DEBUG=True)
