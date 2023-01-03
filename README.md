@@ -3,7 +3,10 @@ contribution from Mr. Nigel Gardiner from AWS
 ```
 curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 ```
-
+After about 10 minutes with ROS installed, you will need to reboot the system
+```
+sudo reboot
+```
 #### 
 #### create 20.04
 ```
@@ -23,7 +26,7 @@ aws_secret_access_key=
 aws_session_token=
 ```
 
-# aws_mouse (only run once)
+# aws_mouse (only run once). 
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
