@@ -7,6 +7,8 @@ import sys, time
 import rospy
 # Micromouse_Node: A Node to manage Micromouse behavior. More can be found on this in the maze_demo/src/mouse_common/utils.py file
 from mouse_common.utils import Micromouse_Node
+from pyamaze.pyamaze import maze
+from pyamaze.aStarDemo import aStar
 from geometry_msgs.msg import Twist
 
 # Minimum Safety Range to Wall
@@ -35,6 +37,7 @@ class MazeRunner(object):
         
         self.action = action
         self.argument = float(dist)
+        self.maze = maze(16,16)
 
         # Rune Maze with out new object 
         self.runMaze(micromouse_node)
