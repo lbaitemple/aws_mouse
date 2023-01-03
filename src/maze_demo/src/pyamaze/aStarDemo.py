@@ -1,5 +1,5 @@
 from pyamaze import maze,agent,COLOR,textLabel
-from queue import PriorityQueue
+from Queue import PriorityQueue
 def h(cell1, cell2):
     x1, y1 = cell1
     x2, y2 = cell2
