@@ -59,49 +59,54 @@ class MazeRunner(object):
     	else:
     	    mv_forward = True
 
-        while not rospy.is_shutdown():
+    	while not rospy.is_shutdown():
             if mn.laser_sensors is not None:
     	        vel_msgl, leftd = mn.follow_left_wall(mv_forward, desired_dist = 0.13, kp = kp)
             	vel_msgr, rightd = mn.follow_right_wall(mv_forward, desired_dist = 0.13, kp = kp)
             	vel_msgc, centerd = mn.follow_both_wall(mv_forward, kp = kp)
             	
-		# no wall on both side
-                follow=''
-                if ((mn.laser_sensors['left']>0.3 and mn.laser_sensors['right']>0.3) or (mn.laser_sensors['frontleft']>0.3 and mn.laser_sensors['frontright']>0.3)): # no wall on both side
+            	follow=''
+            	if ((mn.laser_sensors['left']>0.3 and mn.laser_sensors['right']>0.3) or (mn.laser_sensors['frontleft']>0.3 and mn.laser_sensors['frontright']>0.3)): # no wall on both side
                     vel_msg = vel_msgl
                     vel_msg.angular.z =0 # no rotation
                     follow = 'no wall'
 #                    print("no wall")
-                else:
-		    # if left side wall is closer, follow left
-	            if (rightd > leftd) and (mn.laser_sensors['frontleft']>0.07):  # follow left
-                        vel_msg = vel_msgl
-                        follow = 'left wall'
-	            elif (rightd > leftd) and (mn.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
-                        vel_msg = vel_msgc
-                        follow = 'center wall'
-	            elif (rightd < leftd) and (mn.laser_sensors['frontright']>0.07):  # follow right
+            	else:		    # if left side wall is closer, follow left
+    	            if (rightd > leftd) and (mn.laser_sensors['frontleft']>0.07):  # follow left
+                            vel_msg = vel_msgl
+                            follow = 'left wall'
+    	            elif (rightd > leftd) and (mn.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
+                            vel_msg = vel_msgc
+                            follow = 'center wall'
+    	            elif (rightd < leftd) and (mn.laser_sensors['frontright']>0.07):  # follow right
                         vel_msg = vel_msgr
                         follow = 'right wall'
-                    else:
+    	            else:
                         vel_msg = vel_msgc
                         follow = 'center wall'
 
-		mn.pub_msg.publish(vel_msg)
-                mn.print_walldistance(False, follow)
+            	mn.pub_msg.publish(vel_msg)
+            	mn.print_walldistance(False, follow)
             	if (mn.laser_sensors['front']<wall_distance_forward):
             	    break
             	if (mn._mved_distance.data >abs(distance)):
             	    break
             	rate.sleep()
+    	        vel_msg = Twist()
+    	        vel_msg.linear.x = 0
+    	        mn.pub_msg.publish(vel_msg)
+    	        if (DEBUG):
+    	            print("distance travelled {:.3f}".format(mn._mved_distance.data))
+    	
     	vel_msg = Twist()
     	vel_msg.linear.x = 0
+    	vel_msg.angular.z = 0
     	mn.pub_msg.publish(vel_msg)
-    	if (DEBUG):
-    	    print("distance travelled {:.3f}".format(mn._mved_distance.data))
-    	    
+   	
     	return mn._mved_distance.data
-
+    	
+    def shutdown(self):
+        print("node is killed")
 
     def runMaze(self, mn):
         # Inputs: 
@@ -113,6 +118,7 @@ class MazeRunner(object):
 
         # Log Info 
         rospy.loginfo('**starting....')
+        rate = rospy.Rate(1)
 
         # Start Counting
         step = 0
@@ -132,6 +138,9 @@ class MazeRunner(object):
             if (self.action == 'turn'):
                 mn.turnangle(self.argument, DEBUG=True)
             print("done action")
+            rate.sleep()
+            #rospy.on_shutdown(self.shutdown)
+#            rospy.signal_shutdown('Quit')
 #            mn.move_onecell(distance=fdist, DEBUG=True)
 #            mn.move_onecell(distance=fdist, DEBUG=True)
 #            mn.turnangle(90, DEBUG=True)
