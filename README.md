@@ -3,7 +3,7 @@ contribution from Mr. Nigel Gardiner from AWS
 ```
 curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
 ```
-After about 10 minutes with ROS installed, you will need to reboot the system
+After about 10 minutes with ROS installed, you must reboot the system
 ```
 sudo reboot
 ```
