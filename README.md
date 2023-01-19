@@ -1,4 +1,4 @@
-## Install Robomaker 
+## 1. Install Robomaker 
 contribution from Mr. Nigel Gardiner from AWS
 ```
 curl -fsSL "http://bit.ly/robomaker" | sudo -E bash -
@@ -8,13 +8,14 @@ After about 10 minutes with ROS installed, you must reboot the system
 sudo reboot
 ```
 
-## aws_mouse (only run once) ->aws management console -> cloud 9 
+## 2. Setup aws_mouse 
+### (only run once) ->aws management console -> cloud 9 
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
 bash ./updateos.sh
 ```
-If you see any lock error, please try
+Only when you see any lock error, please try
 ```
 sudo rm -r /var/lib/dpkg/lock*
 sudo dpkg --configure -a
@@ -26,15 +27,35 @@ bash ./updateos.sh
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### open virtual desktop 
+## 3. Run and program aws_mouse (when step 1 and step 2 are completed)
+### 3a. run the following commands only when you changed the source code
 ```
 colcon build
 source install/setup.bash
-export DISPLAY=:0
-roslaunch maze_demo explore_world.launch
 ```
 
-##### see what camera sees
+### 3b.open virtual desktop 
+```
+cd ~/environment/aws_mouse
+export DISPLAY=:0
+source install/setup.bash
+roslaunch maze_demo explore_world.launch
+```
+### 3c.open one more terminal to control the robot move forward for 1.2 meters
+```
+cd ~/environment/aws_mouse
+source install/setup.bash
+rosrun maze_demo runner_template.py oforward 1.2
+```
+### 3c.open one more terminal to control the robot rotate left for 90 degrees (right rotation is negative degrees)
+
+```
+cd ~/environment/aws_mouse
+source install/setup.bash
+rosrun maze_demo runner_template.py turn 90
+```
+
+### 4. see what camera sees
 ###### open another terminal
 ```
 source install/setup.bash
@@ -43,13 +64,18 @@ rqt_image_view
 ```
 
 
+##
+##
+## You can stop here .... 
+##
+##
+
+
+## The following is for more advanced AI usages.
 ###### if load an empty world with flowers, you can use
 ```
 roslaunch maze_demo explore_world.launch worldfile:=empty_flower.world x:=0 y:=0
 ```
-
-
-
 
 ### running the robot. [node_follow_wall2.py has the cmd_vel topic to move the robot]
 #####  open another terminal 
