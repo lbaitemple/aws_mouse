@@ -7,26 +7,8 @@ After about 10 minutes with ROS installed, you must reboot the system
 ```
 sudo reboot
 ```
-#### 
-#### create 20.04
-```
-sudo apt install python2 nodejs awscli -y
-```
-run the above code in ec2 before cloud9 is launched.
-```
-wget https://raw.githubusercontent.com/lbaitemple/aws_mouse/saveimage/ubuntu-2004-ros2-foxy-dcv.sh
-```
 
-create a file .aws/credentials  with the following content 
-```
-[default]
-region=us-east-1
-aws_access_key_id= 
-aws_secret_access_key=
-aws_session_token=
-```
-
-# aws_mouse (only run once). 
+## aws_mouse (only run once) ->aws management console -> cloud 9 
 ```
 git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
@@ -42,8 +24,6 @@ bash ./updateos.sh
 ### compile ROS (only run once)
 ```
 rosdep install --from-paths src --ignore-src -r -y
-pip2 install -U PyYAML
-
 ```
 
 ### open virtual desktop 
