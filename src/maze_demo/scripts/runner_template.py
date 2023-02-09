@@ -149,7 +149,7 @@ class MazeRunner(object):
 #            mn.move_onecell(distance=fdist, DEBUG=True)
 #            mn.move_onecell(distance=fdist, DEBUG=True)
 #            mn.move_onecell(distance=fdist, DEBUG=True)
-            break   
+            sys.exit()   
 
                 # This case statement will select what to do given sensor data 
 #                if  (mn.laser_sensors['front']>fdist):
