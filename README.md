@@ -39,7 +39,7 @@ source install/setup.bash
 cd ~/environment/aws_mouse
 export DISPLAY=:0
 source install/setup.bash
-roslaunch maze_demo explore_world.launch
+roslaunch maze_demo explore_world.launch worldfile:=nflower_world.world
 ```
 ### 3c.open one more terminal to control the robot move forward for 1.2 meters
 ```
