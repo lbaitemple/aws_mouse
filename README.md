@@ -11,7 +11,7 @@ sudo reboot
 ## 2. Setup aws_mouse 
 ### (only run once) ->aws management console -> cloud 9 
 ```
-git clone -b saveimage  https://github.com/lbaitemple/aws_mouse/ 
+git clone -b ieee_2023  https://github.com/lbaitemple/aws_mouse/ 
 cd aws_mouse
 bash ./updateos.sh
 ```
