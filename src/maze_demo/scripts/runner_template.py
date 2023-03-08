@@ -63,7 +63,7 @@ class MazeRunner(object):
             if mn.laser_sensors is not None:
     	        vel_msgl, leftd = mn.follow_left_wall(mv_forward, desired_dist = 0.13, kp = kp)
             	vel_msgr, rightd = mn.follow_right_wall(mv_forward, desired_dist = 0.13, kp = kp)
-            	#vel_msgc, centerd = mn.follow_both_wall(mv_forward, kp = kp)
+            	vel_msgc, centerd = mn.follow_both_wall(mv_forward, kp = kp)
             	
             	follow=''
             	if ((mn.laser_sensors['left']>0.3 and mn.laser_sensors['right']>0.3) or (mn.laser_sensors['frontleft']>0.3 and mn.laser_sensors['frontright']>0.3)): # no wall on both side
@@ -76,13 +76,13 @@ class MazeRunner(object):
                             vel_msg = vel_msgl
                             follow = 'left wall'
     	            elif (rightd > leftd) and (mn.laser_sensors['frontleft']<0.07):  # too close to the wall so follow center
-                            vel_msg = vel_msgr
+                            vel_msg = vel_msgc
                             follow = 'center wall'
     	            elif (rightd < leftd) and (mn.laser_sensors['frontright']>0.07):  # follow right
                         vel_msg = vel_msgr
                         follow = 'right wall'
     	            else:
-                        vel_msg = vel_msgl
+                        vel_msg = vel_msgc
                         follow = 'center wall'
 
             	mn.pub_msg.publish(vel_msg)
