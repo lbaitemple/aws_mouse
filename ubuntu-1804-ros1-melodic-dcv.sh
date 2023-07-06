@@ -7,7 +7,7 @@ apt-get update && apt-get upgrade -y linux-aws && apt upgrade -y
 
 # Resize Cloud9 Volume
 
-SIZE=20 # Change from the default 8GB to 20GB
+SIZE=30 # Change from the default 8GB to 20GB
 
 # Get the ID of the environment host Amazon EC2 instance.
 INSTANCEID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
